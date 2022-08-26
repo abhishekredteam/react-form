@@ -1,23 +1,49 @@
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
 import './App.css';
+import Navbar from './Components/Navbar';
+import StudentDetails from './Components/StudentDetails';
+import Studentlist from './Components/Studentlist';
 
 function App() {
+  const idb = window.indexedDB || window.mozIndexedDb;
+  const createCollectionsInIndexedDb = () => {
+    if (!idb) {
+      console.log("this Browser doesnt sopports IndexedDb");
+      return;
+    }
+    console.log(idb);
+    const request = idb.open("DBName", 2);
+
+
+    request.onerror = (event) => {
+
+      console.error("An error occured with indexedDb");
+      console.error(event);
+
+    }
+
+    request.onupgradeneeded = (event) => {
+      console.log(event);
+      const db = request.result;
+      if (!db.objectStoreNames.contains('userData')) {
+        db.createObjectStore('userData', {
+          keyPath: "id"
+        })
+      }
+    }
+
+  }
+
+  useEffect(() => {
+    createCollectionsInIndexedDb();
+  }, [])
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+<Navbar  />
+<StudentDetails />
+<Studentlist  />
     </div>
   );
 }
