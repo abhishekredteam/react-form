@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
-import './App.css';
-import Navbar from './Components/Navbar';
-import StudentDetails from './Components/StudentDetails';
-import Studentlist from './Components/Studentlist';
+import React, { useEffect } from "react";
+import "./App.css";
+import AppNavbar from "./Components/AppNavbar";
 
 function App() {
   const idb = window.indexedDB || window.mozIndexedDb;
@@ -14,36 +12,29 @@ function App() {
     console.log(idb);
     const request = idb.open("DBName", 2);
 
-
     request.onerror = (event) => {
-
       console.error("An error occured with indexedDb");
       console.error(event);
-
-    }
+    };
 
     request.onupgradeneeded = (event) => {
       console.log(event);
       const db = request.result;
-      if (!db.objectStoreNames.contains('userData')) {
-        db.createObjectStore('userData', {
-          keyPath: "id"
-        })
+      if (!db.objectStoreNames.contains("userData")) {
+        db.createObjectStore("userData", {
+          keyPath: "id",
+        });
       }
-    }
-
-  }
+    };
+  };
 
   useEffect(() => {
     createCollectionsInIndexedDb();
-  }, [])
-
+  }, []);
 
   return (
     <div className="App">
-<Navbar  />
-<StudentDetails />
-<Studentlist  />
+      <AppNavbar/>
     </div>
   );
 }
