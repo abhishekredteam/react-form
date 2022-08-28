@@ -17,7 +17,7 @@ function AppNavbar() {
  
 const title='APP'    
 const pages = ['Home', 'List', 'Details'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Logout'];
 
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
