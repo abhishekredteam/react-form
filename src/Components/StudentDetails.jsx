@@ -1,9 +1,13 @@
 import React from 'react'
 
-function StudentDetails() {
+function Details() {
   return (
-    <div>StudentDetails</div>
+    <div>
+      <h1>
+        Welcome to Student Details !!!
+      </h1>
+      </div>
   )
 }
 
-export default StudentDetails;
+export default Details;

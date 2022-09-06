@@ -1,61 +1,183 @@
-import React, { useState } from "react";
 import {
-  AppBar,
-  Button,
-  Tab,
-  Tabs,
-  Toolbar,
-  Typography,
-  useMediaQuery,
-  useTheme,
+	AppBar,
+	Avatar,
+	Box,
+	Button,
+	Container,
+	IconButton,
+	Menu,
+	MenuItem,
+	Toolbar,
+	Tooltip,
+	Typography,
+	Link,
 } from "@mui/material";
-import AddBusinessRoundedIcon from "@mui/icons-material/AddBusinessRounded";
-function AppNavbar () {
-  const [value, setValue] = useState();
-  const theme = useTheme();
-  console.log(theme);
-  const isMatch = useMediaQuery(theme.breakpoints.down("md"));
-  console.log(isMatch);
 
-const handleMenuClick=()=>{
-  
-}
+import IntegrationInstructionsIcon from "@mui/icons-material/IntegrationInstructions";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useState } from "react";
 
-  return (
-    <React.Fragment>
-      <AppBar sx={{ background: "#A66CFF" }}>
-        <Toolbar>
-          <AddBusinessRoundedIcon sx={{ transform: "scale(2)" }} />
-          {isMatch ? (
-            <>
-              <Typography sx={{ fontSize: "2rem", paddingLeft: "10%" }}>
-                App
-              </Typography>
-            </>
-          ) : (
-            <>
-              <Tabs
-                // sx={{ marginLeft: "auto" }}
-                indicatorColor="secondary"
-                textColor="inherit"
-                value={value}
-                onChange={(e, value) => setValue(value)}
-              >
-                <Tab  onClick={handleMenuClick} label="Home" />
-                <Tab label="List" />
-                <Tab label="Details" />
-              </Tabs>
-              {/* <Button sx={{ marginLeft: "auto" }} variant="contained">
-                Login
-              </Button>
-              <Button sx={{ marginLeft: "10px" }} variant="contained">
-                SignUp
-              </Button> */}
-            </>
-          )}
-        </Toolbar>
-      </AppBar>
-    </React.Fragment>
-  );
+import { Link as RouterLink } from "react-router-dom";
+
+const pages = ["Home", "List", "Dashboard"];
+const settings = ["Profile", "Logout"];
+
+const AppHeader = () => {
+	const [anchorElNav, setAnchorElNav] = useState(null);
+	const [anchorElUser, setAnchorElUser] = useState(null);
+
+	const handleOpenNavMenu = (event) => {
+		setAnchorElNav(event.currentTarget);
+	};
+	const handleOpenUserMenu = (event) => {
+		setAnchorElUser(event.currentTarget);
+	};
+
+	const handleCloseNavMenu = () => {
+		setAnchorElNav(null);
+	};
+
+	const handleCloseUserMenu = () => {
+		setAnchorElUser(null);
+	};
+
+	return (
+		<AppBar position="static">
+			<Container maxWidth="xl">
+				<Toolbar disableGutters>
+					{/* <IntegrationInstructionsIcon
+						sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+					/> */}
+					<Typography
+						variant="h6"
+						noWrap
+						component="a"
+						href="/"
+						sx={{
+							mr: 2,
+							display: { xs: "none", md: "flex" },
+							fontFamily: "monospace",
+							fontWeight: 700,
+							letterSpacing: ".3rem",
+							color: "inherit",
+							textDecoration: "none",
+						}}>
+						SchoolApp
+					</Typography>
+
+					<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+						<IconButton
+							size="large"
+							aria-label="account of current user"
+							aria-controls="menu-appbar"
+							aria-haspopup="true"
+							onClick={handleOpenNavMenu}
+							color="inherit">
+							<MenuIcon />
+						</IconButton>
+						<Menu
+							id="menu-appbar"
+							anchorEl={anchorElNav}
+							anchorOrigin={{
+								vertical: "bottom",
+								horizontal: "left",
+							}}
+							keepMounted
+							transformOrigin={{
+								vertical: "top",
+								horizontal: "left",
+							}}
+							open={Boolean(anchorElNav)}
+							onClose={handleCloseNavMenu}
+							sx={{
+								display: { xs: "block", md: "none" },
+							}}>
+							{pages.map((page) => {
+								// const toPath = page === "List" ? "list" : "/";
+								// console.log(toPath);
+								return (
+									<Link component={RouterLink} to='/'  key={page}>
+										<MenuItem onClick={handleCloseNavMenu}>
+											<Typography textAlign="center">{page}</Typography>
+										</MenuItem>
+									</Link>
+								);
+							})}
+						</Menu>
+					</Box>
+					<IntegrationInstructionsIcon
+						sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+					/>
+					<Typography
+						variant="h5"
+						noWrap
+						component="a"
+						href=""
+						sx={{
+							mr: 2,
+							display: { xs: "flex", md: "none" },
+							flexGrow: 1,
+							fontFamily: "monospace",
+							fontWeight: 700,
+							letterSpacing: ".3rem",
+							color: "inherit",
+							textDecoration: "none",
+						}}>
+						School App
+					</Typography>
+					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+						{pages.map((page) => {
+							// const toPath = page === "" ? "blogs" : "/";
+
+							return (
+								<Link component={RouterLink}  to='/' key={page}>
+									<Button
+										key={page}
+										onClick={handleCloseNavMenu}
+										sx={{ my: 2, color: "white", display: "block" }}>
+										{page}
+									</Button>
+								</Link>
+							);
+						})}
+					</Box>
+
+					<Box sx={{ flexGrow: 0 }}>
+						<Tooltip title="Open settings">
+							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+							</IconButton>
+						</Tooltip>
+						<Menu
+							sx={{ mt: "45px" }}
+							id="menu-appbar"
+							anchorEl={anchorElUser}
+							anchorOrigin={{
+								vertical: "top",
+								horizontal: "right",
+							}}
+							keepMounted
+							transformOrigin={{
+								vertical: "top",
+								horizontal: "right",
+							}}
+							open={Boolean(anchorElUser)}
+							onClose={handleCloseUserMenu}>
+							{settings.map((setting) => (
+								<MenuItem key={setting} onClick={handleCloseUserMenu}>
+									<Link
+										sx={{ textDecoration: "none" }}
+										component={RouterLink}
+										to={setting.toLocaleLowerCase()}>
+										<Typography textAlign="center">{setting}</Typography>
+									</Link>
+								</MenuItem>
+							))}
+						</Menu>
+					</Box>
+				</Toolbar>
+			</Container>
+		</AppBar>
+	);
 };
-export default AppNavbar;
+
+export default AppHeader;
