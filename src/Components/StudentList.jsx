@@ -1,13 +1,12 @@
 import React from 'react'
 
-const List = () => {
+ const StudentList = () => {
   return (
     <div>
-       <h1>
-        Students List page 
-       </h1>
+      <h1>
+        Welcome
+      </h1>
     </div>
   )
 }
-
-export default List;
+export default StudentList;

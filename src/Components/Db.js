@@ -3,12 +3,15 @@ const Db=()=>{
 
  // Creating instance of the database    
 var db = new Dexie("StudentDatabase");
-db.version(1).stores({ students: "++id,firstName,lastName,age,Dob,class,mobileNumber" });
+db.version(3).stores({ students: "++id,firstName,lastName,age,Dob,class,mobileNumber",
+
+});
 db.open();
+
 
 // Interact With Database
 db.transaction("rw", db.students,  function* () {
-    
+
     // Let's add some data to db:
     var student1Id = yield db.students.add({
         id:1,
@@ -29,6 +32,16 @@ db.transaction("rw", db.students,  function* () {
         mobileNumber:'1215246514'
        
       });
+
+//Deleting an entry from the database 
+
+      db.transaction('rw', db.students, function* () {
+        var deleteCount = yield db.students
+           .where("firstName").delete
+        console.log ("Successfully deleted " + deleteCount + " items");
+    }).catch (e => {
+        console.error (e);
+    });
 })
 }
 

@@ -14,18 +14,17 @@ import dayjs from 'dayjs';
 
 
 const Signup = () => {
-    const paperStyle = { padding: 20, width: 300, margin: "0 auto" }
+    const paperStyle = { padding:"20px 20px", width: 300, margin: "0 auto" }
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
     const marginTop = { marginTop: 5 }
     const [value, setValue] = useState(dayjs('29-09-2022'));
-
     const handleChange = (newValue) => {
         setValue(newValue);
       };
 
     return (
-        <Grid>
+        <Grid spacing={2}>
             <Paper style={paperStyle}>
                 <Grid align='center'>
                     <Avatar style={avatarStyle}>

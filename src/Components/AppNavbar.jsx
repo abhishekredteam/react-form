@@ -45,9 +45,9 @@ const AppHeader = () => {
 		<AppBar position="static">
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
-					{/* <IntegrationInstructionsIcon
-						sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-					/> */}
+				<IconButton onClick={handleOpenUserMenu} sx={{ p: 2 }}>
+                <Avatar alt="RemySharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
 					<Typography
 						variant="h6"
 						noWrap
@@ -93,10 +93,13 @@ const AppHeader = () => {
 								display: { xs: "block", md: "none" },
 							}}>
 							{pages.map((page) => {
-								// const toPath = page === "List" ? "list" : "/";
-								// console.log(toPath);
+								let toPath=page;
+								if(page=== "Home"){toPath="/"}
+								if(page=== "List"){toPath="/list"}
+								if(page=== "Dashboard"){toPath="/dashboard"}
+		
 								return (
-									<Link component={RouterLink} to='/'  key={page}>
+									<Link component={RouterLink} to={toPath}  key={page}>
 										<MenuItem onClick={handleCloseNavMenu}>
 											<Typography textAlign="center">{page}</Typography>
 										</MenuItem>
@@ -127,10 +130,14 @@ const AppHeader = () => {
 					</Typography>
 					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
 						{pages.map((page) => {
-							// const toPath = page === "" ? "blogs" : "/";
+						let toPath=page;
+						if(page=== "Home"){toPath="/"}
+						if(page=== "List"){toPath="/list"}
+						if(page=== "Dashboard"){toPath="/dashboard"}
+
 
 							return (
-								<Link component={RouterLink}  to='/' key={page}>
+								<Link component={RouterLink}  to={toPath} key={page}>
 									<Button
 										key={page}
 										onClick={handleCloseNavMenu}
@@ -163,12 +170,14 @@ const AppHeader = () => {
 							open={Boolean(anchorElUser)}
 							onClose={handleCloseUserMenu}>
 							{settings.map((setting) => (
-								<MenuItem key={setting} onClick={handleCloseUserMenu}>
+								
+								<MenuItem key={settings} onClick={handleCloseUserMenu}>
+								
 									<Link
 										sx={{ textDecoration: "none" }}
 										component={RouterLink}
-										to={setting.toLocaleLowerCase()}>
-										<Typography textAlign="center">{setting}</Typography>
+										to={toPath}>
+										<Typography textAlign="center">{settings}</Typography>
 									</Link>
 								</MenuItem>
 							))}
